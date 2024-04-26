@@ -4,13 +4,15 @@ public class Main {
 
     public static void main(String[] args) {
 
-        int divisiPrincipal = 0;
-        int divisaSecundaria = 0;
+        int divisiPrincipal = 1;
+        int divisaSecundaria = 1;
         String moneda1 = "";
         String moneda2 = "";
         double valorAConvertir;
         double resultado;
-        while (divisiPrincipal !=7 || divisaSecundaria !=7) {
+        boolean finalizar = false;
+
+        while (!finalizar) {
             System.out.println("""
                     ###################################
                     ###        BIENVENIDO AL        ###
@@ -57,11 +59,15 @@ public class Main {
                     break;
                 case 7:
                     System.out.println("Gracias, Esperamos verte pronto");
-                    break;
-                default: System.out.println("Opción no válida");
+                    finalizar = true;
+                    return;
+
+                default:
+                    System.out.println("Opción no válida");
                     continue;
 
             }
+
 
 
             System.out.println("####################################\n" +
@@ -77,7 +83,6 @@ public class Main {
 
             Scanner SegundaSelecionUsuario = new Scanner(System.in);
             divisaSecundaria = SegundaSelecionUsuario.nextInt();
-
 
             switch (divisaSecundaria) {
                 case 1:
@@ -106,7 +111,7 @@ public class Main {
                     break;
                 case 7:
                     System.out.println("Gracias, Esperamos verte pronto");
-
+                    finalizar = true ;
                     break;
 
 
@@ -114,7 +119,6 @@ public class Main {
                     System.out.println("Opción no válida");
                     continue;
             }
-
 
 
             System.out.println("¿Cuantos " + moneda1 + " desea convertir a " +
@@ -131,6 +135,8 @@ public class Main {
 
             System.out.println(valorAConvertir +" " + moneda1 + " equivale a " +
                     resultado + " de " + moneda2);
+
         }
+
     }
 }
