@@ -1,47 +1,136 @@
-
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException {
 
-        Scanner lectura = new Scanner(System.in);
-        System.out.println("""
-                ########################################### 
-                ### Bienvenidos al Conversor de divisas ### 
-                ###                                     ###
-                ### Ingresa la cantidad a convertir     ###
-                ###########################################
-                """
-               );
-        double cantidad = Double.parseDouble(lectura.nextLine());
+    public static void main(String[] args) {
 
-        Scanner divisa = new Scanner(System.in);
-        System.out.println("Ingresa el codigo de tu moneda");
-        String moneda = divisa.nextLine();
+        int divisiPrincipal = 0;
+        int divisaSecundaria = 0;
+        String moneda1 = "";
+        String moneda2 = "";
+        double valorAConvertir;
+        double resultado;
+        while (divisiPrincipal !=7 || divisaSecundaria !=7) {
+            System.out.println("""
+                    ###################################
+                    ###        BIENVENIDO AL        ###
+                    ###    CONVERSOR DE DIVISAS     ###
+                    ###################################
+                    """ +
+                    "Selecionar la divisa principal:\n" +
+                    "1) ARS- Peso Argentino\n" +
+                    "2) BOB- boliviano\n" +
+                    "3) BRL- Real Brasileño\n" +
+                    "4) CLP- Peso Chileno\n" +
+                    "5) COP- Peso Colombiano\n" +
+                    "6) USD- Dolar estadounidense\n" +
+                    "7) Finalizar\n" +
+                    "####################################");
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://v6.exchangerate-api.com/v6/8a00f0c684176d094ba3be4f/latest/"+ moneda))
-                .build();
+            Scanner PrimeraSelecionUsuario = new Scanner(System.in);
+            divisiPrincipal = PrimeraSelecionUsuario.nextInt();
 
-        HttpResponse<String> response = client
-                .send(request, HttpResponse.BodyHandlers.ofString());
+            switch (divisiPrincipal) {
+                case 1:
+                    moneda1 = "ARS";
+                    System.out.println(moneda1);
+                    break;
+                case 2:
+                    moneda1 = "BOB";
+                    System.out.println(moneda1);
+                    break;
+                case 3:
+                    moneda1 = "BRL";
+                    System.out.println(moneda1);
+                    break;
+                case 4:
+                    moneda1 = "CLP";
+                    System.out.println(moneda1);
+                    break;
+                case 5:
+                    moneda1 = "COP";
+                    System.out.println(moneda1);
+                    break;
+                case 6:
+                    moneda1 = "USD";
+                    System.out.println(moneda1);
+                    break;
+                case 7:
+                    System.out.println("Gracias, Esperamos verte pronto");
+                    break;
+                default: System.out.println("Opción no válida");
+                    continue;
+
+            }
+
+
+            System.out.println("####################################\n" +
+                    "Selecionar la divisa Secundaria:\n" +
+                    "1) ARS- Peso Argentino\n" +
+                    "2) BOB- boliviano\n" +
+                    "3) BRL- Real Brasileño\n" +
+                    "4) CLP- Peso Chileno\n" +
+                    "5) COP- Peso Colombiano\n" +
+                    "6) USD- Dolar estadounidense\n" +
+                    "7) Finalizar\n" +
+                    "###############################################");
+
+            Scanner SegundaSelecionUsuario = new Scanner(System.in);
+            divisaSecundaria = SegundaSelecionUsuario.nextInt();
+
+
+            switch (divisaSecundaria) {
+                case 1:
+                    moneda2 = "ARS";
+                    System.out.println(moneda2);
+                    break;
+                case 2:
+                    moneda2 = "BOB";
+                    System.out.println(moneda2);
+                    break;
+                case 3:
+                    moneda2 = "BRL";
+                    System.out.println(moneda2);
+                    break;
+                case 4:
+                    moneda2 = "CLP";
+                    System.out.println(moneda2);
+                    break;
+                case 5:
+                    moneda2 = "COP";
+                    System.out.println(moneda2);
+                    break;
+                case 6:
+                    moneda2 = "USD";
+                    System.out.println(moneda2);
+                    break;
+                case 7:
+                    System.out.println("Gracias, Esperamos verte pronto");
+
+                    break;
+
+
+                default:
+                    System.out.println("Opción no válida");
+                    continue;
+            }
 
 
 
+            System.out.println("¿Cuantos " + moneda1 + " desea convertir a " +
+                    moneda2 + "?");
+
+            Scanner valorIngresadoUsuario = new Scanner(System.in);
+            valorAConvertir = valorIngresadoUsuario.nextDouble();
+
+            ConsultarDivisa consulta = new ConsultarDivisa();
+            TasaDeCambio tasaDeCambio = consulta.buscaMoneda(moneda1, moneda2);
 
 
+            resultado = tasaDeCambio.conversion_rate * valorAConvertir;
 
-        System.out.println(response.body());
-        System.out.println(cantidad);
-
-
+            System.out.println(valorAConvertir +" " + moneda1 + " equivale a " +
+                    resultado + " de " + moneda2);
+        }
     }
 }
-
-
